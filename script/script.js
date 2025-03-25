@@ -1,7 +1,17 @@
 "use strict";
-
 const destinationContainer = document.querySelector(".dest-content");
 const navLinks = document.querySelectorAll(".nav-links");
+
+// Function to update nav-links active state
+const updateNavActiveState = function (activePage) {
+  navLinks.forEach((link) => {
+    link.classList.remove("nav-links--active");
+    const navText = link.textContent.split(" ")[1]?.toLowerCase() || "";
+    if (navText === activePage) {
+      link.classList.add("nav-links--active");
+    }
+  });
+};
 
 // Function to render the destination content
 const renderDestination = function (data, className = "") {
@@ -12,17 +22,29 @@ const renderDestination = function (data, className = "") {
       </div>
       <div class="dest-txt-cont">
         <ul class="dest-list">
-          <li><a class="dest-link" href="#" data-dest="moon">MOON</a></li>
-          <li><a class="dest-link" href="#" data-dest="mars">MARS</a></li>
-          <li><a class="dest-link" href="#" data-dest="europa">EUROPA</a></li>
-          <li><a class="dest-link" href="#" data-dest="titan">TITAN</a></li>
+          <li><a class="dest-link ${
+            data.name.toLowerCase() === "moon" ? "dest-link--active" : ""
+          }" href="#" data-dest="moon">MOON</a></li>
+          <li><a class="dest-link ${
+            data.name.toLowerCase() === "mars" ? "dest-link--active" : ""
+          }" href="#" data-dest="mars">MARS</a></li>
+          <li><a class="dest-link ${
+            data.name.toLowerCase() === "europa" ? "dest-link--active" : ""
+          }" href="#" data-dest="europa">EUROPA</a></li>
+          <li><a class="dest-link ${
+            data.name.toLowerCase() === "titan" ? "dest-link--active" : ""
+          }" href="#" data-dest="titan">TITAN</a></li>
         </ul>
         <h1 class="dest-head">${data.name}</h1>
-        <p class="dest-txt">${data.description}</p> <!-- Fixed typo: 'discription' -> 'description' -->
+        <p class="dest-txt">${data.description}</p>
         <div class="dest-line"></div>
         <div class="distance-cont">
-          <p class="distance-txt">AVG. DISTANCE <span>${data.distance}</span></p>
-          <p class="distance-txt">EST. TRAVEL TIME <span>${data.travel}</span></p>
+          <p class="distance-txt">AVG. DISTANCE <span>${
+            data.distance
+          }</span></p>
+          <p class="distance-txt">EST. TRAVEL TIME <span>${
+            data.travel
+          }</span></p>
         </div>
       </div>
     </div>
@@ -34,14 +56,21 @@ const renderDestination = function (data, className = "") {
 
   const destLinks = document.querySelectorAll(".dest-link");
   destLinks.forEach((link) =>
-    link.addEventListener("click", function () {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      // Remove active class from all links
+      destLinks.forEach((l) => l.classList.remove("dest-link--active"));
+      // Add active class to clicked link
+      this.classList.add("dest-link--active");
+
       const destinationName = this.getAttribute("data-dest").toLowerCase();
       getDestinationData(destinationName);
     })
   );
+
+  updateNavActiveState("destination");
 };
 
-// Function to fetch and filter destination data
 const getDestinationData = function (destinationName) {
   fetch("data.json")
     .then((response) => {
@@ -61,19 +90,16 @@ const getDestinationData = function (destinationName) {
     .catch((error) => console.error("Error fetching data:", error));
 };
 
-// Add event listeners to nav links (optional, based on your navigation intent)
-navLinks.forEach(
-  (link) =>
-    function (e) {
+navLinks.forEach((link) =>
+  link.addEventListener("click", function (e) {
+    const navText = this.textContent.split(" ")[1]?.toLowerCase() || "";
+    if (navText === "destination") {
       e.preventDefault();
-
-      const navText = this.textContent.split(" ")[10]?.toLowerCase || "";
-      if (navText === "destinations") {
-        link.addEventListener("click", function (e) {
-          getDestinationData("moon");
-        });
-      }
+      getDestinationData("moon");
+    } else {
+      updateNavActiveState(navText);
     }
+  })
 );
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -58,7 +58,6 @@ const getTechData = function (techName) {
       } else {
         console.error(`Tech name "${techName}" not found`);
       }
-      console.log(data);
     })
     .catch((error) => console.error("Error fetching data:", error));
 };
@@ -94,3 +93,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // console.log(getTechData("Launch vehicle"));
+window.addEventListener("resize", () => {
+  if (techContainer) {
+    const currentTech = document
+      .querySelector(".tech-title")
+      .textContent.toLowerCase();
+    getTechData(currentTech);
+  }
+});

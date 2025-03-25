@@ -27,6 +27,33 @@
 }
 
 .dest-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dest-link {
+  color: #d0d6f9;
+  text-decoration: none;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2.7px;
+  padding-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.dest-link:hover {
+  color: white;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.dest-link--active {
+  color: white;
+  border-bottom: 3px solid white;
+}
+
+/* .dest-list {
   list-style: none;
   display: flex;
   align-items: center;
@@ -48,7 +75,7 @@
 .dest-link:active {
   color: #fff;
   border-bottom: 2px solid #fff;
-}
+} */
 
 .dest-head {
   font-size: 6.4rem;
