@@ -3,11 +3,7 @@ const navLinks = document.querySelectorAll(".nav-links");
 
 const renderCrew = function (data, className = "") {
   const html = ` <div class="crew-cont ${className}">
-          <div class="crew-text-cont">
-            <h2 class="crew-role"> ${data.role}</h2>
-            <h1 class="crew-name">${data.name}</h1>
-            <p class="crew-text">${data.bio}</p>
-            <div class="dots">
+  <div class="dots">
               <a class="dots-dot ${
                 data.role.toLowerCase() === "commander"
                   ? "dots__dot--active"
@@ -27,6 +23,10 @@ const renderCrew = function (data, className = "") {
                   : ""
               }" data-crew="Flight Engineer"></a>
             </div>
+          <div class="crew-text-cont">
+            <h2 class="crew-role"> ${data.role}</h2>
+            <h1 class="crew-name">${data.name}</h1>
+            <p class="crew-text">${data.bio}</p>
           </div>
           <div class="crew-img">
             <img src="${data.images.png}" alt="">
@@ -40,8 +40,6 @@ const renderCrew = function (data, className = "") {
   const dots = document.querySelectorAll(".dots-dot");
   dots.forEach((dot) => {
     dot.addEventListener("click", function () {
-      dots.forEach((d) => d.classList.remove("dots__dot--active"));
-      this.classList.add("dots__dot--active");
       const crewRole = this.getAttribute("data-crew").toLowerCase();
       getCrewData(crewRole);
     });
@@ -63,6 +61,7 @@ const getCrewData = function (crewRole) {
       } else {
         console.error(`Crew role "${crewRole}" not found`);
       }
+      console.log(data);
     })
     .catch((error) => console.error("Error fetching data:", error));
 };

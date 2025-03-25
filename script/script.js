@@ -68,7 +68,7 @@ navLinks.forEach(
       e.preventDefault();
 
       const navText = this.textContent.split(" ")[10]?.toLowerCase || "";
-      if (navText === "destination") {
+      if (navText === "destinations") {
         link.addEventListener("click", function (e) {
           getDestinationData("moon");
         });
