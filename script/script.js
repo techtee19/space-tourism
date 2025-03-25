@@ -2,7 +2,6 @@
 const destinationContainer = document.querySelector(".dest-content");
 const navLinks = document.querySelectorAll(".nav-links");
 
-// Function to update nav-links active state
 const updateNavActiveState = function (activePage) {
   navLinks.forEach((link) => {
     link.classList.remove("nav-links--active");
@@ -58,9 +57,7 @@ const renderDestination = function (data, className = "") {
   destLinks.forEach((link) =>
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      // Remove active class from all links
       destLinks.forEach((l) => l.classList.remove("dest-link--active"));
-      // Add active class to clicked link
       this.classList.add("dest-link--active");
 
       const destinationName = this.getAttribute("data-dest").toLowerCase();
